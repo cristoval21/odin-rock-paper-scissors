@@ -11,4 +11,20 @@ function getComputerChoice() {
   }
 }
 
-console.log(getComputerChoice())
+function playRound(playerSelection, computerSelection) {
+  if (playerSelection === computerSelection) {
+    return "It's a Tie!"
+  } else if (
+    (playerSelection === "rock" && computerSelection === "paper") ||
+    (playerSelection === "paper" && computerSelection === "scissors") ||
+    (playerSelection === "scissors" && computerSelection === "rock")
+  ) {
+    return `You Lose! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`
+  } else {
+    return `You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`
+  }
+}
+
+const playerSelection = "rock"
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection))
