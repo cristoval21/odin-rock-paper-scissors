@@ -1,3 +1,7 @@
+let roundsPlayed = 0
+let playerScore = 0
+let computerScore = 0
+
 function getComputerChoice() {
   let randomNumber = Math.floor((Math.random() * 3)) + 1
 
@@ -13,18 +17,54 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    return "It's a Tie!"
+    playerScore++
+    computerScore++
+    return "tie"
   } else if (
     (playerSelection === "rock" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "rock")
   ) {
-    return `You Lose! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`
+    computerScore++
+    return "lose"
   } else {
-    return `You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`
+    playerScore++
+    return "win"
   }
 }
 
-const playerSelection = "rock"
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection))
+function game() {
+  const playerSelection = prompt("What are you throwing?")
+  const computerSelection = getComputerChoice()
+
+  const result = playRound(playerSelection, computerSelection)
+
+  switch (result) {
+    case "tie":
+      console.log("It's a Tie!")
+      break
+    case "lose":
+      console.log(`You Lose! ${computerSelection} beats ${playerSelection}`)
+      break
+    case "win":
+      console.log(`You Win! ${playerSelection} beats ${computerSelection}`)
+      break
+  }
+
+  return result
+}
+
+while (roundsPlayed < 5) {
+  const roundResult = game()
+
+  if (roundResult != "tie") roundsPlayed++
+}
+
+console.log(`Final score: ${playerScore} - ${computerScore}`)
+if (playerScore > computerScore) {
+  console.log("You beat the computer!")
+} else if (playerScore < computerScore) {
+  console.log("The computer beat you!")
+} else {
+  console.log("The game was a tie!")
+}
